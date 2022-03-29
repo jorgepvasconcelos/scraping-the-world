@@ -1,29 +1,6 @@
-from selenium import webdriver
-from time import sleep
 from selenium.webdriver.common.by import By
-from env import ENV
 
-# from webdriver_toolkit import WebDriverToolKit
-from scraping_the_world.scrapers.webdriver_toolkit import WebDriverToolKit
-
-
-def get_driver():
-    options = webdriver.ChromeOptions()
-    options.add_argument('--ignore-ssl-errors=yes')
-    options.add_argument('--ignore-certificate-errors')
-    # options.add_argument('--headless')
-
-    if ENV['ENV'] == 'DEV':
-        driver = webdriver.Remote(command_executor='http://localhost:4444/wd/hub', options=options)
-        # driver = webdriver.Chrome(options=options)
-    else:
-        driver = webdriver.Remote(command_executor='http://container_selenium:4444/wd/hub', options=options) # rodar com docker
-
-    driver.maximize_window()
-
-    wdtk = WebDriverToolKit(driver)
-
-    return driver, wdtk
+from scraping_the_world.scrapers.webdriver_manager.webdriver_manager import get_driver
 
 
 def scraping_americanas(url):
@@ -58,6 +35,7 @@ def scraping_americanas(url):
 
 
 if __name__ == '__main__':
+    ...
     # scraping_result = scraping_americanas('https://www.americanas.com.br/produto/3068486001') # no description
-    scraping_result = scraping_americanas('https://www.americanas.com.br/produto/2896992161')  # with description
-    print(scraping_result)
+    # scraping_result = scraping_americanas('https://www.americanas.com.br/produto/2896992161')  # with description
+    # print(scraping_result)
