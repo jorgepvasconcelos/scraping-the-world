@@ -6,7 +6,7 @@ import traceback
 
 import pymysql.cursors
 
-from database_schema import SCHEMA_DDL
+from scraping_the_world.models.database_schema import SCHEMA_DDL
 
 
 @contextmanager
@@ -16,7 +16,7 @@ def conecta():
         user='root',
         password='',
         port=3306,
-        db='starwars',
+        db='scraper',
         charset='utf8mb4',
         cursorclass=pymysql.cursors.DictCursor
     )
