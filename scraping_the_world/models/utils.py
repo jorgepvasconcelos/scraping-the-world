@@ -7,18 +7,16 @@ import traceback
 import pymysql.cursors
 
 from scraping_the_world.models.database_schema import SCHEMA_DDL
-
+from env import ENV
 
 @contextmanager
 def conecta():
     conexao = pymysql.connect(
-        # host='localhost',
-        host='mysql_server',
-        user='root',
-        # password='',
-        password='123',
-        port=3306,
-        db='scraper',
+        host=ENV['DB_HOST'],
+        user=ENV['DB_USER'],
+        password=ENV['DB_PASSWORD'],
+        port=int(ENV['DB_PORT']),
+        db=ENV['DB_NAME'],
         charset='utf8mb4',
         cursorclass=pymysql.cursors.DictCursor
     )

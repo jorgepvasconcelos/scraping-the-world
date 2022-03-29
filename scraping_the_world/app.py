@@ -4,6 +4,7 @@ from flask_restful import Api
 from scraping_the_world.models.utils import create_database
 from routes.index import Index
 from routes.consult import Consult
+from env import ENV
 
 
 app = Flask(__name__)
