@@ -11,7 +11,7 @@ services:
 #    networks:
 #      - mysql-compose-network
     depends_on:
-#      - mysql_server
+      - mysql_server
       - selenium_service
 
   selenium_service:
@@ -21,13 +21,13 @@ services:
     ports:
       - 4444:4444
 
-#  mysql_server:
-#    image: mysql:5.7
-#    environment:
-#      MYSQL_ROOT_PASSWORD: "123"
-#      MYSQL_PASSWORD: '123'
-#      MYSQL_DATABASE: "testedb"
-#    ports:
+  mysql_server:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: "123"
+      MYSQL_PASSWORD: '123'
+      MYSQL_DATABASE: "scraper"
+    ports:
       - "3306:3306"
 #    networks:
 #      - mysql-compose-network

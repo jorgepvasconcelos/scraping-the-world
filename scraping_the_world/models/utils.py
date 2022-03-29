@@ -12,9 +12,11 @@ from scraping_the_world.models.database_schema import SCHEMA_DDL
 @contextmanager
 def conecta():
     conexao = pymysql.connect(
-        host='localhost',
+        # host='localhost',
+        host='mysql_server',
         user='root',
-        password='',
+        # password='',
+        password='123',
         port=3306,
         db='scraper',
         charset='utf8mb4',
