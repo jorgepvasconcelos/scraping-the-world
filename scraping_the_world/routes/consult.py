@@ -1,3 +1,4 @@
+from datetime import datetime
 from urllib.parse import urlparse
 from flask_restful import Resource, reqparse
 
@@ -12,6 +13,19 @@ def have_to_redo(data_dict: dict) -> bool:
             break
         return False
     return True
+
+
+def have_to_update_data(last_verify) -> bool:
+    """if have passed one hour of the last_verify in site, must update the datas"""
+    actual_hour = datetime.now()
+    actual_hour = f'{actual_hour.year}-{actual_hour.month}-{actual_hour.day} {actual_hour.hour}:{actual_hour.minute}:{actual_hour.second}'
+    actual_hour = datetime.strptime(actual_hour, "%Y-%m-%d %H:%M:%S")
+
+    time_diff = abs((actual_hour - last_verify).seconds) / 3600
+    print('time_diff=', time_diff)
+    if time_diff > 1:
+        return True
+    return False
 
 
 def get_data(url_site) -> dict:
