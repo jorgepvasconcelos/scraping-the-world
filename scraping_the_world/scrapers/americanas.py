@@ -2,30 +2,36 @@ from selenium import webdriver
 from time import sleep
 from selenium.webdriver.common.by import By
 
+from webdriver_toolkit import WebDriverToolKit
+
 
 def get_driver():
     options = webdriver.ChromeOptions()
     options.add_argument('--ignore-ssl-errors=yes')
     options.add_argument('--ignore-certificate-errors')
-    options.add_argument('--headless')
+    # options.add_argument('--headless')
 
     driver = webdriver.Remote(command_executor='http://localhost:4444/wd/hub', options=options)
+    # driver = webdriver.Chrome(options=options)
     driver.maximize_window()
 
-    return driver
+    wdtk = WebDriverToolKit(driver)
+
+    return driver, wdtk
 
 
 def scraping_americanas(url):
-    print("Test Execution Started")
+    site_data = {'titulo': None, 'imagem': None, 'preco': None, 'url': None}
 
-    driver = get_driver()
+    driver, wdtk = get_driver()
     driver.get(url)
-    sleep(10)
-    var = driver.find_element(By.CSS_SELECTOR, '.priceSales').text
 
-    driver.close()
+    if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, '.priceSales')):
+        site_data['preco'] = driver.find_element(By.CSS_SELECTOR, '.priceSales').text
+
     driver.quit()
-    return var
+
+    return site_data
 
 
 if __name__ == '__main__':
