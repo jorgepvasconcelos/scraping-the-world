@@ -4,6 +4,7 @@ from flask_restful import Resource, reqparse
 
 from scraping_the_world.models.utils import DataBase
 from scraping_the_world.scrapers.americanas import scraping_americanas
+from scraping_the_world.scrapers.submarino import scraping_submarino
 
 
 def have_to_redo(data_dict: dict) -> bool:
@@ -40,7 +41,7 @@ def get_data(url_site) -> dict:
     return data_from_site
 
 
-def last_information_get(last_data:dict):
+def last_information_get(last_data: dict):
     titulo = last_data['titulo']
     imagem = last_data['imagem']
     preco = last_data['preco']
@@ -63,6 +64,9 @@ def get_data_from_site(url):
 
     if 'americanas' in hostname:
         result = scraping_americanas(url)
+        return result
+    elif 'submarino' in hostname:
+        result = scraping_submarino(url)
         return result
 
 
