@@ -26,8 +26,17 @@ def scraping_americanas(url):
     driver, wdtk = get_driver()
     driver.get(url)
 
+    if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, '.product-title__Title-sc-1hlrxcw-0')):
+        site_data['titulo'] = driver.find_element(By.CSS_SELECTOR, '.product-title__Title-sc-1hlrxcw-0').text
+
+    img_selector = 'div[class="main-image__Container-sc-1i1hq2n-1 iCNHlx"]>div>picture>img'
+    if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, img_selector)):
+        site_data['imagem'] = driver.find_element(By.CSS_SELECTOR, img_selector).get_attribute('src')
+
     if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, '.priceSales')):
         site_data['preco'] = driver.find_element(By.CSS_SELECTOR, '.priceSales').text
+
+    site_data['url'] = driver.current_url
 
     driver.quit()
 
