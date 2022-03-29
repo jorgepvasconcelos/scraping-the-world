@@ -15,13 +15,20 @@ services:
     depends_on:
       - mysql_server
 
-  mysql_server:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: "123"
-      MYSQL_PASSWORD: '123'
-      MYSQL_DATABASE: "testedb"
+  selenium_service:
+    image: selenium/standalone-chrome
+    container_name: container_selenium
+    shm_size: 2gb
     ports:
+      - 4444:4444
+
+#  mysql_server:
+#    image: mysql:5.7
+#    environment:
+#      MYSQL_ROOT_PASSWORD: "123"
+#      MYSQL_PASSWORD: '123'
+#      MYSQL_DATABASE: "testedb"
+#    ports:
       - "3306:3306"
 #    networks:
 #      - mysql-compose-network
