@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 # from webdriver_toolkit import WebDriverToolKit
 from scraping_the_world.scrapers.webdriver_toolkit import WebDriverToolKit
 
+
 def get_driver():
     options = webdriver.ChromeOptions()
     options.add_argument('--ignore-ssl-errors=yes')
@@ -21,20 +22,28 @@ def get_driver():
 
 
 def scraping_americanas(url):
-    site_data = {'titulo': None, 'imagem': None, 'preco': None, 'url': None}
+    site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None}
 
     driver, wdtk = get_driver()
     driver.get(url)
 
-    if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, '.product-title__Title-sc-1hlrxcw-0')):
-        site_data['titulo'] = driver.find_element(By.CSS_SELECTOR, '.product-title__Title-sc-1hlrxcw-0').text
+    selector = '.product-title__Title-sc-1hlrxcw-0'
+    if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, selector)):
+        site_data['titulo'] = driver.find_element(By.CSS_SELECTOR, selector).text
 
-    img_selector = 'div[class="main-image__Container-sc-1i1hq2n-1 iCNHlx"]>div>picture>img'
-    if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, img_selector)):
-        site_data['imagem'] = driver.find_element(By.CSS_SELECTOR, img_selector).get_attribute('src')
+    selector = 'div[class="main-image__Container-sc-1i1hq2n-1 iCNHlx"]>div>picture>img'
+    if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, selector)):
+        site_data['imagem'] = driver.find_element(By.CSS_SELECTOR, selector).get_attribute('src')
 
-    if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, '.priceSales')):
-        site_data['preco'] = driver.find_element(By.CSS_SELECTOR, '.priceSales').text
+    selector = '.priceSales'
+    if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, selector)):
+        site_data['preco'] = driver.find_element(By.CSS_SELECTOR, selector).text
+
+    selector = '.product-description__Description-sc-ytj6zc-1'
+    if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, selector)):
+        site_data['descricao'] = driver.find_element(By.CSS_SELECTOR, selector).text
+    else:
+        site_data['descricao'] = 'No Description'
 
     site_data['url'] = driver.current_url
 
@@ -44,5 +53,6 @@ def scraping_americanas(url):
 
 
 if __name__ == '__main__':
-    scraping_result = scraping_americanas('https://www.americanas.com.br/produto/3068486001')
+    # scraping_result = scraping_americanas('https://www.americanas.com.br/produto/3068486001') # no description
+    scraping_result = scraping_americanas('https://www.americanas.com.br/produto/2896992161')  # with description
     print(scraping_result)
