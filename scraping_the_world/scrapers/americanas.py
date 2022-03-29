@@ -13,6 +13,8 @@ def get_driver():
     # options.add_argument('--headless')
 
     driver = webdriver.Remote(command_executor='http://localhost:4444/wd/hub', options=options)
+    # driver = webdriver.Remote(command_executor='http://container_selenium:4444/wd/hub', options=options) # rodar com docker
+
     # driver = webdriver.Chrome(options=options)
     driver.maximize_window()
 
