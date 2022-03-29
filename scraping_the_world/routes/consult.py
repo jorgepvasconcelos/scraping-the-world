@@ -1,7 +1,7 @@
 from urllib.parse import urlparse
-
 from flask_restful import Resource, reqparse
 
+from scraping_the_world.models.utils import DataBase
 from scraping_the_world.scrapers.americanas import scraping_americanas
 
 
@@ -15,7 +15,8 @@ def have_to_redo(data_dict: dict) -> bool:
 
 
 def get_data(url_site) -> dict:
-    data_from_site = {'titulo': None, 'imagem': None, 'preco': None, 'url': None}
+    data_from_site = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None}
+
     for _ in range(3):
         data_from_site = get_data_from_site(url_site)
         if have_to_redo(data_from_site):
@@ -40,18 +41,26 @@ class Consult(Resource):
 
     def get(self):
         request_data = Consult.params.parse_args()
+        url_received = request_data['url']
 
-        data = get_data(request_data['url'])
+        data = get_data(url_received)
 
         titulo = data['titulo']
         imagem = data['imagem']
         preco = data['preco']
+        descricao = data['descricao']
         url = data['url']
+
+        query = """
+        INSERT INTO sites_data (title, preco, imagem, descricao, url_recebida, url_site)
+        VALUES (%s,%s,%s,%s,%s,%s);"""
+        DataBase.execute(query=query, arguments=[titulo, preco, imagem, descricao, url_received, url])
 
         json_return = {
             'titulo': titulo,
             'imagem': imagem,
             'preco': preco,
+            'descricao': descricao,
             'url': url,
         }
         return json_return
