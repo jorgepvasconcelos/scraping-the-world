@@ -14,7 +14,17 @@ def have_to_redo(data_dict: dict) -> bool:
     return True
 
 
-def get_data(url):
+def get_data(url_site):
+    for _ in range(3):
+        data_from_site = get_data_from_site(url_site)
+        if have_to_redo(data_from_site):
+            continue
+        else:
+            break
+    return data_from_site
+
+
+def get_data_from_site(url):
     parse = urlparse(url)
     hostname = parse.hostname
 
@@ -30,17 +40,12 @@ class Consult(Resource):
     def get(self):
         request_data = Consult.params.parse_args()
 
-        for _ in range(3):
-            result = get_data(request_data['url'])
-            if have_to_redo(result):
-                continue
-            else:
-                break
+        data = get_data(request_data['url'])
 
-        titulo = result['titulo']
-        imagem = result['imagem']
-        preco = result['preco']
-        url = result['url']
+        titulo = data['titulo']
+        imagem = data['imagem']
+        preco = data['preco']
+        url = data['url']
 
         json_return = {
             'titulo': titulo,
