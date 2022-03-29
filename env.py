@@ -1,6 +1,7 @@
 from dotenv import dotenv_values
 
-__ON_DOCKER = False
+__ON_DOCKER = True
+
 if __ON_DOCKER:
     ENV = dotenv_values('.env')
 else:
