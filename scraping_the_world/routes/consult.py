@@ -23,12 +23,11 @@ class Consult(Resource):
         print(request_data)
 
         result = get_data(request_data['url'])
-        print(result)
 
         json_return = {
-            'titulo': 'esse e o titulo',
-            'imagem': 'esse e a imagem',
-            'preco': 'esse e o preco',
-            'url': 'esse e a url',
+            'titulo': result['titulo'],
+            'imagem': result['imagem'],
+            'preco': result['preco'],
+            'url': result['url'],
         }
         return json_return
