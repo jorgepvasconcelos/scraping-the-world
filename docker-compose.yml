@@ -1,0 +1,31 @@
+version: '3'
+services:
+  flask_service:
+    build:
+      context: .
+      dockerfile: dockerfile
+    image: flask_image
+    container_name: container_flask
+    ports:
+      - 5000:5000
+    links:
+      - mysql_server
+#    networks:
+#      - mysql-compose-network
+    depends_on:
+      - mysql_server
+
+  mysql_server:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: "123"
+      MYSQL_PASSWORD: '123'
+      MYSQL_DATABASE: "testedb"
+    ports:
+      - "3306:3306"
+#    networks:
+#      - mysql-compose-network
+#
+#networks:
+#  mysql-compose-network:
+#    driver: bridge
