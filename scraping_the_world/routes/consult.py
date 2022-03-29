@@ -14,7 +14,8 @@ def have_to_redo(data_dict: dict) -> bool:
     return True
 
 
-def get_data(url_site):
+def get_data(url_site) -> dict:
+    data_from_site = {'titulo': None, 'imagem': None, 'preco': None, 'url': None}
     for _ in range(3):
         data_from_site = get_data_from_site(url_site)
         if have_to_redo(data_from_site):
