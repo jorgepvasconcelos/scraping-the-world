@@ -1,14 +1,15 @@
 SCHEMA_DDL = """
-create table if not exists planets
+create table if not exists sites_data
 (
-	id_planet int auto_increment
+	id int auto_increment
 		primary key,
-	name varchar(45) null,
-	climate varchar(45) null,
-	terrain varchar(45) null
-)
-charset=utf8mb4;
-
+	titulo varchar(100) null,
+	preco varchar(50) null,
+	imagem varchar(50) null,
+	descricao varchar(500) null,
+	url varchar(500) null,
+	data_verificado datetime default current_timestamp() null
+);
 
 
 """
