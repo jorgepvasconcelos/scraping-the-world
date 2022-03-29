@@ -2,8 +2,8 @@ from selenium import webdriver
 from time import sleep
 from selenium.webdriver.common.by import By
 
-from webdriver_toolkit import WebDriverToolKit
-
+# from webdriver_toolkit import WebDriverToolKit
+from scraping_the_world.scrapers.webdriver_toolkit import WebDriverToolKit
 
 def get_driver():
     options = webdriver.ChromeOptions()
