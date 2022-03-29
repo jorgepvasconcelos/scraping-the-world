@@ -4,5 +4,5 @@ WORKDIR /var/www
 RUN pip install -r requirements.txt
 COPY . /var/www
 WORKDIR /var/www
-ENV PYTHONPATH "${PYTHONPATH}:/var/www/starwars_api"
-CMD [ "python", "starwars_api/app.py" ]
+ENV PYTHONPATH "${PYTHONPATH}:/var/www/scraping_the_world"
+CMD [ "python", "scraping_the_world/app.py" ]

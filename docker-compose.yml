@@ -8,12 +8,11 @@ services:
     container_name: container_flask
     ports:
       - 5000:5000
-    links:
-      - mysql_server
 #    networks:
 #      - mysql-compose-network
     depends_on:
-      - mysql_server
+#      - mysql_server
+      - selenium_service
 
   selenium_service:
     image: selenium/standalone-chrome
