@@ -40,6 +40,23 @@ def get_data(url_site) -> dict:
     return data_from_site
 
 
+def last_information_get(last_data:dict):
+    titulo = last_data['titulo']
+    imagem = last_data['imagem']
+    preco = last_data['preco']
+    descricao = last_data['descricao']
+    url = last_data['url_site']
+
+    json_return = {
+        'titulo': titulo,
+        'imagem': imagem,
+        'preco': preco,
+        'descricao': descricao,
+        'url': url,
+    }
+    return json_return
+
+
 def get_data_from_site(url):
     parse = urlparse(url)
     hostname = parse.hostname
@@ -57,6 +74,10 @@ class Consult(Resource):
         request_data = Consult.params.parse_args()
         url_received = request_data['url']
 
+        query_result = DataBase.consult_one(query='select * from sites_data where url_recebida = %s', arguments=[url_received])
+        if query_result and not have_to_update_data(last_verify=query_result['data_verificado']):
+            return last_information_get(last_data=query_result)
+
         data = get_data(url_received)
 
         titulo = data['titulo']
@@ -66,7 +87,7 @@ class Consult(Resource):
         url = data['url']
 
         query = """
-        INSERT INTO sites_data (title, preco, imagem, descricao, url_recebida, url_site)
+        INSERT INTO sites_data (titulo, preco, imagem, descricao, url_recebida, url_site)
         VALUES (%s,%s,%s,%s,%s,%s);"""
         DataBase.execute(query=query, arguments=[titulo, preco, imagem, descricao, url_received, url])
 
