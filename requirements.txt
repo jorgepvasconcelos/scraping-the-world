@@ -16,6 +16,7 @@ jinja2==3.1.1; python_version >= "3.7"
 markupsafe==2.1.1; python_version >= "3.7"
 outcome==1.1.0; python_version >= "3.7" and python_version < "4.0"
 pycparser==2.21; python_version >= "3.7" and python_full_version < "3.0.0" and os_name == "nt" and implementation_name != "pypy" and python_version < "4.0" or os_name == "nt" and implementation_name != "pypy" and python_version >= "3.7" and python_version < "4.0" and python_full_version >= "3.4.0"
+pymysql==1.0.2; python_version >= "3.6"
 pyopenssl==22.0.0; python_version >= "3.7" and python_full_version < "3.0.0" and python_version < "4.0" or python_full_version >= "3.5.0" and python_version < "4" and python_version >= "3.7"
 pysocks==1.7.1; python_version >= "3.7" and python_full_version < "3.0.0" and python_version < "4.0" or python_full_version >= "3.5.0" and python_version < "4" and python_version >= "3.7"
 pytz==2022.1
