@@ -14,6 +14,11 @@ run: ## Build and run the application
 
 restart: down run ## Rebuild all application
 
+## @ Tests Commands
+.PHONY: test
+test: ## Run tests
+	pytest -v
+
 ## @ Helper Commands
 .PHONY: requirements help
 requirements: ## Update requirements.txt
