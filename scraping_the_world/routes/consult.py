@@ -5,6 +5,7 @@ from flask_restful import Resource, reqparse
 from scraping_the_world.models.utils import DataBase
 from scraping_the_world.scrapers.americanas import scraping_americanas
 from scraping_the_world.scrapers.submarino import scraping_submarino
+from scraping_the_world.scrapers.pontofrio import scraping_pontofrio
 
 
 def have_to_redo(data_dict: dict) -> bool:
@@ -67,6 +68,9 @@ def get_data_from_site(url):
         return result
     elif 'submarino' in hostname:
         result = scraping_submarino(url)
+        return result
+    elif 'pontofrio' in hostname:
+        result = scraping_pontofrio(url)
         return result
 
 
