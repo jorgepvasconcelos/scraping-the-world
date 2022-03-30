@@ -7,5 +7,14 @@
 - [Selenium](https://www.selenium.dev/) - Scraping Tool
 - [MySQL](https://www.mysql.com/) - DBMS
 
+
+### System Requirements
+- python ^3.9
+- docker
+
 ### How to run
     make run
+
+### How to run tests
+    make run
+    
