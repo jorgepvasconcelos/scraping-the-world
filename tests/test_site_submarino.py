@@ -10,4 +10,8 @@ def test_when_consult_submarino_with_description():
     assert response_is_not_empty(response) == True
 
 
+def test_when_consult_submarino_without_description():
+    json_data = {'url': 'https://www.submarino.com.br/produto/1611318018'}
+    response = requests.get(url='http://localhost:5000/consult', json=json_data).json()
 
+    assert response_is_not_empty(response) == True
