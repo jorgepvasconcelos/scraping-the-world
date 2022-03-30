@@ -8,6 +8,20 @@ from scraping_the_world.scrapers.submarino import scraping_submarino
 from scraping_the_world.scrapers.pontofrio import scraping_pontofrio
 
 
+def have_scraping_for_this_site(url: str) -> bool:
+    parse = urlparse(url)
+    hostname = parse.hostname
+
+    if 'americanas' in hostname:
+        return True
+    elif 'submarino' in hostname:
+        return True
+    elif 'pontofrio' in hostname:
+        return True
+    else:
+        return False
+
+
 def have_to_redo(data_dict: dict) -> bool:
     for value in data_dict.values():
         print(value)
@@ -81,6 +95,9 @@ class Consult(Resource):
     def get(self):
         request_data = Consult.params.parse_args()
         url_received = request_data['url']
+
+        if not have_scraping_for_this_site(url=url_received):
+            return {"Error": "We dont have scrapings for this site, please contact us to implement for this site"}, 404
 
         query_result = DataBase.consult_one(query='select * from sites_data where url_recebida = %s', arguments=[url_received])
         if query_result and not have_to_update_data(last_verify=query_result['data_verificado']):
