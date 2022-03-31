@@ -1,33 +1,82 @@
-from selenium.webdriver.common.by import By
+import traceback
 
+from selenium.webdriver.common.by import By
+from requests_html import HTMLSession
+from parsel import Selector
+
+from scraping_the_world.models.querys import add_log, get_config
 from scraping_the_world.scrapers.webdriver_manager.webdriver_manager import get_driver
+from scraping_the_world.exceptions.scrapers_exceptions import SiteWhithoutDataError
+
+__site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None}
 
 
 def scraping_pontofrio(url):
-    site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None}
+    scraping_type = int(get_config('scraping_pontofrio'))
 
+    try:
+        if scraping_type == 0:
+            return scraping_selenium(url=url)
+        elif scraping_type == 1:
+            return scraping_requests(url=url)
+    except:
+        add_log(text=f'[scraping_pontofrio] Traceback: {traceback.format_exc()}', tipe='ERROR')
+        return __site_data
+
+
+def scraping_requests(url):
+    session = HTMLSession()
+    response = session.get(url).text
+    parsel_selector = Selector(text=response)
+
+    selector = '[class=" css-k7ata1 eym5xli0"]::text'
+    __site_data['titulo'] = parsel_selector.css(selector).get()
+
+    selector = '[class="magnify-container"]>div>img::attr(src)'
+    __site_data['imagem'] = parsel_selector.css(selector).get()
+
+    selector = '[id="product-price"]::text'
+    __site_data['preco'] = parsel_selector.css(selector).get()
+
+    # selector = '.product-description__Description-sc-ytj6zc-1::text'
+    # descricao = parsel_selector.css(selector).get()
+    __site_data['descricao'] = 'No Description'
+
+    selector = 'head>[rel="canonical"]::attr(href)'
+    __site_data['url'] = parsel_selector.css(selector).get()
+
+    return __site_data
+
+
+def scraping_selenium(url):
     driver, wdtk = get_driver()
     driver.get(url)
 
     selector = '[class=" css-k7ata1 eym5xli0"]'
     if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, selector)):
-        site_data['titulo'] = driver.find_element(By.CSS_SELECTOR, selector).text
+        __site_data['titulo'] = driver.find_element(By.CSS_SELECTOR, selector).text
+    else:
+        raise SiteWhithoutDataError()
 
     selector = '[class="magnify-container"]>div>img'
     if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, selector)):
-        site_data['imagem'] = driver.find_element(By.CSS_SELECTOR, selector).get_attribute('src')
+        __site_data['imagem'] = driver.find_element(By.CSS_SELECTOR, selector).get_attribute('src')
+    else:
+        raise SiteWhithoutDataError()
 
     selector = '[id="product-price"]'
     if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, selector)):
-        site_data['preco'] = driver.find_element(By.CSS_SELECTOR, selector).text
+        __site_data['preco'] = driver.find_element(By.CSS_SELECTOR, selector).text
+    else:
+        raise SiteWhithoutDataError()
 
-    site_data['descricao'] = 'No Description'
+    __site_data['descricao'] = 'No Description'
 
-    site_data['url'] = driver.current_url
+    __site_data['url'] = driver.current_url
 
     driver.quit()
 
-    return site_data
+    return __site_data
 
 
 if __name__ == '__main__':
