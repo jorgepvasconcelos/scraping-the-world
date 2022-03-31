@@ -5,7 +5,7 @@ from requests_html import HTMLSession
 from parsel import Selector
 
 from scraping_the_world.models.querys import add_log, get_config
-from scraping_the_world.scrapers.webdriver_manager.webdriver_manager import get_driver
+from scraping_the_world.scrapers.webdriver_manager.webdriver_manager import WebdriverManager
 from scraping_the_world.exceptions.scrapers_exceptions import SiteWhithoutDataError
 
 __site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None}
@@ -13,13 +13,20 @@ __site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None,
 
 def scraping_saraiva(url):
     scraping_type = int(get_config('scraping_saraiva'))
+    webdriver_manager = None
 
     try:
         if scraping_type == 0:
-            return scraping_selenium(url=url)
+            webdriver_manager = WebdriverManager()
+            webdriver_manager.create_driver()
+            result = scraping_selenium(url=url)
+            webdriver_manager.driver_quit()
+            return result
         elif scraping_type == 1:
             return scraping_requests(url=url)
     except:
+        if webdriver_manager:
+            webdriver_manager.driver_quit()
         add_log(log_text=f'[scraping_saraiva] Traceback: {traceback.format_exc()}', log_type='ERROR')
         return __site_data
 
@@ -49,7 +56,7 @@ def scraping_requests(url):
 
 
 def scraping_selenium(url):
-    driver, wdtk = get_driver()
+    driver, wdtk = WebdriverManager().get_driver()
     driver.get(url)
 
     selector = '[class="page-title-box"]>h1'
@@ -78,8 +85,6 @@ def scraping_selenium(url):
         __site_data['descricao'] = 'No Description'
 
     __site_data['url'] = driver.current_url
-
-    driver.quit()
 
     return __site_data
 
