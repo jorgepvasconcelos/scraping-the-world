@@ -5,18 +5,22 @@ from requests_html import HTMLSession
 from parsel import Selector
 
 from scraping_the_world.models.querys import add_log, get_config
-from scraping_the_world.scrapers.webdriver_manager.webdriver_manager import get_driver
+from scraping_the_world.scrapers.webdriver_manager.webdriver_manager import WebdriverManager
 from scraping_the_world.exceptions.scrapers_exceptions import SiteWhithoutDataError
 
 __site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None}
 
 
 def scraping_americanas(url):
-    scraping_type = int(get_config('scraping_americanas'))
+    scraping_type = 0
 
     try:
         if scraping_type == 0:
-            return scraping_selenium(url=url)
+            webdriver_manager = WebdriverManager()
+            webdriver_manager.create_driver()
+            result = scraping_selenium(url=url)
+            webdriver_manager.driver_quit()
+            return result
         elif scraping_type == 1:
             return scraping_requests(url=url)
     except:
@@ -49,7 +53,9 @@ def scraping_requests(url):
 
 
 def scraping_selenium(url):
-    driver, wdtk = get_driver()
+    # webdriver_manager = WebdriverManager().get_driver()
+    # webdriver_manager.get_driver()
+    driver, wdtk = WebdriverManager().get_driver()
     driver.get(url)
 
     selector = '.product-title__Title-sc-1hlrxcw-0'
@@ -79,13 +85,11 @@ def scraping_selenium(url):
 
     __site_data['url'] = driver.current_url
 
-    driver.quit()
-
     return __site_data
 
 
 if __name__ == '__main__':
     ...
-    # scraping_result = scraping_americanas('https://www.americanas.com.br/produto/3068486001') # no description
+    scraping_result = scraping_americanas('https://www.americanas.com.br/produto/3068486001')  # no description
     # scraping_result = scraping_americanas('https://www.americanas.com.br/produto/2896992161')  # with description
-    # print(scraping_result)
+    print(scraping_result)
