@@ -11,8 +11,15 @@ from scraping_the_world.exceptions.scrapers_exceptions import SiteWhithoutDataEr
 __site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None}
 
 
+def clean___site_data():
+    global __site_data
+    __site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None}
+
+
 def scraping_submarino(url):
+    clean___site_data()
     scraping_type = int(get_config('scraping_submarino'))
+    webdriver_manager = None
 
     try:
         if scraping_type == 0:
@@ -24,6 +31,8 @@ def scraping_submarino(url):
         elif scraping_type == 1:
             return scraping_requests(url=url)
     except:
+        if webdriver_manager:
+            webdriver_manager.driver_quit()
         add_log(log_text=f'[scraping_submarino] Traceback: {traceback.format_exc()}', log_type='ERROR')
         return __site_data
 

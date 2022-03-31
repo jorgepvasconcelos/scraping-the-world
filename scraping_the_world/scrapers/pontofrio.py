@@ -11,7 +11,13 @@ from scraping_the_world.exceptions.scrapers_exceptions import SiteWhithoutDataEr
 __site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None}
 
 
+def clean___site_data():
+    global __site_data
+    __site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None}
+
+
 def scraping_pontofrio(url):
+    clean___site_data()
     scraping_type = int(get_config('scraping_pontofrio'))
     webdriver_manager = None
 
