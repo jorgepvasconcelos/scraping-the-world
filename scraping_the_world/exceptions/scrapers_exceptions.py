@@ -1,2 +1,2 @@
-class SiteWhithoutData(Exception):
+class SiteWhithoutDataError(Exception):
     ...

@@ -6,6 +6,7 @@ from parsel import Selector
 
 from scraping_the_world.models.querys import add_log, get_config
 from scraping_the_world.scrapers.webdriver_manager.webdriver_manager import get_driver
+from scraping_the_world.exceptions.scrapers_exceptions import SiteWhithoutDataError
 
 __site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None}
 
@@ -54,14 +55,20 @@ def scraping_selenium(url):
     selector = '.product-title__Title-sc-1hlrxcw-0'
     if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, selector)):
         __site_data['titulo'] = driver.find_element(By.CSS_SELECTOR, selector).text
+    else:
+        raise SiteWhithoutDataError()
 
     selector = 'div[class="main-image__Container-sc-1i1hq2n-1 iCNHlx"]>div>picture>img'
     if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, selector)):
         __site_data['imagem'] = driver.find_element(By.CSS_SELECTOR, selector).get_attribute('src')
+    else:
+        raise SiteWhithoutDataError()
 
     selector = '.priceSales'
     if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, selector)):
         __site_data['preco'] = driver.find_element(By.CSS_SELECTOR, selector).text
+    else:
+        raise SiteWhithoutDataError()
 
     selector = '.product-description__Description-sc-ytj6zc-1'
     if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, selector)):
