@@ -72,7 +72,8 @@ def scraping_selenium(url):
 
     selector = '.product-description__Description-sc-ytj6zc-1'
     if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, selector)):
-        __site_data['descricao'] = driver.find_element(By.CSS_SELECTOR, selector).text
+        descricao = driver.find_element(By.CSS_SELECTOR, selector).text
+        __site_data['descricao'] = descricao if descricao else 'No Description'
     else:
         __site_data['descricao'] = 'No Description'
 
