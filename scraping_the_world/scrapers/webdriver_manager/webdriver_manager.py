@@ -27,12 +27,13 @@ def get_driver():
     # options.add_argument('--headless')
 
     if ENV['ENV'] == 'DEV':
-        driver = webdriver.Remote(command_executor='http://localhost:4444/wd/hub', options=options)
-        # webdriver_path = f'{WEBDRIVERS_PATH}\\chromedriver'
-        # driver = webdriver.Chrome(executable_path=webdriver_path, options=options)
+        if int(ENV['SELENIUM_REMOTE']) == 1:
+            driver = webdriver.Remote(command_executor='http://localhost:4444/wd/hub', options=options)
+        else:
+            webdriver_path = f'{WEBDRIVERS_PATH}\\chromedriver'
+            driver = webdriver.Chrome(executable_path=webdriver_path, options=options)
     else:
-        driver = webdriver.Remote(command_executor='http://container_selenium:4444/wd/hub',
-                                  options=options)  # rodar com docker
+        driver = webdriver.Remote(command_executor='http://container_selenium:4444/wd/hub', options=options)
 
     driver.maximize_window()
 
