@@ -12,8 +12,8 @@ __site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None,
 
 
 def scraping_americanas(url):
-    scraping_type = 0
-
+    scraping_type = int(get_config('scraping_americanas'))
+    webdriver_manager = None
     try:
         if scraping_type == 0:
             webdriver_manager = WebdriverManager()
