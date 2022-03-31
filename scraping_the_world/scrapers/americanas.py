@@ -24,6 +24,8 @@ def scraping_americanas(url):
         elif scraping_type == 1:
             return scraping_requests(url=url)
     except:
+        if webdriver_manager:
+            webdriver_manager.driver_quit()
         add_log(log_text=f'[scraping_americanas] Traceback: {traceback.format_exc()}', log_type='ERROR')
         return __site_data
 
@@ -53,8 +55,6 @@ def scraping_requests(url):
 
 
 def scraping_selenium(url):
-    # webdriver_manager = WebdriverManager().get_driver()
-    # webdriver_manager.get_driver()
     driver, wdtk = WebdriverManager().get_driver()
     driver.get(url)
 
