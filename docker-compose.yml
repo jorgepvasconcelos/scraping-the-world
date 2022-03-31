@@ -24,9 +24,9 @@ services:
   mysql_server:
     image: mysql:5.7
     environment:
-      MYSQL_ROOT_PASSWORD: "123"
-      MYSQL_PASSWORD: '123'
-      MYSQL_DATABASE: "scraper"
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
     ports:
       - "3306:3306"
 #    networks:
