@@ -6,6 +6,7 @@ from scraping_the_world.models.utils import DataBase
 from scraping_the_world.scrapers.americanas import scraping_americanas
 from scraping_the_world.scrapers.submarino import scraping_submarino
 from scraping_the_world.scrapers.pontofrio import scraping_pontofrio
+from scraping_the_world.scrapers.saraiva import scraping_saraiva
 
 
 def have_scraping_for_this_site(url: str) -> bool:
@@ -17,6 +18,8 @@ def have_scraping_for_this_site(url: str) -> bool:
     elif 'submarino' in hostname:
         return True
     elif 'pontofrio' in hostname:
+        return True
+    elif 'saraiva' in hostname:
         return True
     else:
         return False
@@ -85,6 +88,9 @@ def get_data_from_site(url):
         return result
     elif 'pontofrio' in hostname:
         result = scraping_pontofrio(url)
+        return result
+    elif 'saraiva' in hostname:
+        result = scraping_saraiva(url)
         return result
 
 
