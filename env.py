@@ -2,10 +2,12 @@ import os
 
 from dotenv import dotenv_values
 
+ENV_PATH = os.path.dirname(os.path.realpath(__file__))
+
 
 def path_to_file(file):
     path = None
-    for root, dirs, files in os.walk('.'):
+    for root, dirs, files in os.walk(ENV_PATH):
         for name in files:
             if name == file:
                 path = (os.path.abspath(os.path.join(root, name)))
