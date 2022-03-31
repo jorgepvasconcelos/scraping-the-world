@@ -63,7 +63,7 @@ class DataBase:
 
 def create_database():
     for _ in range(10):
-        sleep(5)
+        sleep(10)
         try:
             for tables in SCHEMA_DDL.strip().split('|'):
                 DataBase.execute(tables)
