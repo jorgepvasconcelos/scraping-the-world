@@ -14,7 +14,7 @@ create table if not exists logs
 	id int auto_increment
 		primary key,
 	log_text text null,
-	type varchar(50) null,
+	log_type varchar(50) null,
 	log_date datetime default current_timestamp() null
 );
 

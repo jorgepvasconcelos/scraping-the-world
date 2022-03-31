@@ -20,7 +20,7 @@ def scraping_americanas(url):
         elif scraping_type == 1:
             return scraping_requests(url=url)
     except:
-        add_log(text=f'[scraping_americanas] Traceback: {traceback.format_exc()}', tipe='ERROR')
+        add_log(log_text=f'[scraping_americanas] Traceback: {traceback.format_exc()}', log_type='ERROR')
         return __site_data
 
 

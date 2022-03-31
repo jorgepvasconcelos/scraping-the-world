@@ -3,9 +3,9 @@ import traceback
 from scraping_the_world.models.utils import DataBase
 
 
-def add_log(text: str, tipe: str) -> None:
+def add_log(log_text: str, log_type: str) -> None:
     try:
-        DataBase.execute(query="INSERT INTO logs (log_text, tipe) VALUE (%s, %s)", arguments=[text, tipe])
+        DataBase.execute(query="INSERT INTO logs (log_text, log_type) VALUE (%s, %s)", arguments=[log_text, log_type])
     except:
         traceback.print_exc()
 
