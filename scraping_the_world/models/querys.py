@@ -11,4 +11,6 @@ def add_log(text: str, tipe: str) -> None:
 
 
 def get_config(name: str):
-    return DataBase.consult_one(query="select value from configs where name = %s; ", arguments=[name])
+    value = DataBase.consult_one(query="select value from configs where name = %s; ", arguments=[name])
+    value = value['value']
+    return value
