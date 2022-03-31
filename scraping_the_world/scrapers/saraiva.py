@@ -59,6 +59,9 @@ def scraping_selenium(url):
     driver, wdtk = WebdriverManager().get_driver()
     driver.get(url)
 
+    if 'Pagina não encontrada' in driver.page_source:
+        return __site_data
+
     selector = '[class="page-title-box"]>h1'
     if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, selector)):
         __site_data['titulo'] = driver.find_element(By.CSS_SELECTOR, selector).text
