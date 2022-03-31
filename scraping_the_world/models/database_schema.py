@@ -1,15 +1,35 @@
 SCHEMA_DDL = """
+create table if not exists configs
+(
+	id int auto_increment
+		primary key,
+	name varchar(50) null,
+	value varchar(50) null
+);
+
+create table if not exists logs
+(
+	id int auto_increment
+		primary key,
+	text text null,
+	type varchar(50) null,
+	log_date datetime default current_timestamp() null
+);
+
 create table if not exists sites_data
 (
 	id int auto_increment
 		primary key,
-	titulo varchar(200) null,
+	titulo text null,
 	preco varchar(50) null,
-	imagem varchar(200) null,
-	descricao varchar(1000) null,
-	url_recebida varchar(500) null,
+	imagem text null,
+	descricao text null,
+	url_recebida text null,
 	data_verificado datetime default current_timestamp() null,
-	url_site varchar(500) null
+	url_site text null
 );
+
+
+
 
 """
