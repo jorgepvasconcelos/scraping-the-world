@@ -7,7 +7,9 @@ import traceback
 import pymysql.cursors
 
 from scraping_the_world.models.database_schema import SCHEMA_DDL
+from scraping_the_world.models.db_populate import QUERY_POPULATE
 from env import ENV
+
 
 @contextmanager
 def conecta():
@@ -61,12 +63,22 @@ class DataBase:
 
 def create_database():
     for _ in range(10):
+        sleep(5)
         try:
-            DataBase.execute(SCHEMA_DDL)
+            for tables in SCHEMA_DDL.strip().split('|'):
+                DataBase.execute(tables)
             break
         except:
             traceback.print_exc()
             sleep(2)
+
+
+def populate_database():
+    try:
+        for query in QUERY_POPULATE:
+            DataBase.execute(query)
+    except:
+        traceback.print_exc()
 
 
 if __name__ == '__main__':

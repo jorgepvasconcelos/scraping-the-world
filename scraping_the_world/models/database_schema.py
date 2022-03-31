@@ -7,14 +7,18 @@ create table if not exists configs
 	value varchar(50) null
 );
 
+|
+
 create table if not exists logs
 (
 	id int auto_increment
 		primary key,
-	text text null,
+	log_text text null,
 	type varchar(50) null,
 	log_date datetime default current_timestamp() null
 );
+
+|
 
 create table if not exists sites_data
 (
@@ -28,8 +32,4 @@ create table if not exists sites_data
 	data_verificado datetime default current_timestamp() null,
 	url_site text null
 );
-
-
-
-
 """
