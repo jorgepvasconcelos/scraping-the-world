@@ -15,6 +15,10 @@
 ### How to run
     make run
 
+### How to run dev
+    1 - Change "ENV" param value to "DEV"  in .env file
+    2 - python scraping_the_world/app.py
+
 ### How to run tests
     make run
     make test
