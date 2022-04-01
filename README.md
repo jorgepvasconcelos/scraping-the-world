@@ -25,6 +25,11 @@
     make run
     make test
 
+### How to run dev tests
+    1 - Change "ENV" param value to "DEV"  in .env file
+    2 - python scraping_the_world/app.py
+    3 - make test
+
 ### Project structure
     - scraping-the-world
         - /scraping_the_world # Code source
