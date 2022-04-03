@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "bcefb225-3529-445c-a727-558a386d76bc",
+		"name": "scraping-the-world",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/consult",
+			"item": [
+				{
+					"name": "americanas",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"url\": \"https://www.americanas.com.br/produto/3068486001\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/consult",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"consult"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "submarino",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"url\": \"https://www.submarino.com.br/produto/1611318018\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/consult",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"consult"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "saraiva",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"url\": \"https://www.saraiva.com.br/box-o-essencial-da-psicologia-3-volumes-10081856/p\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/consult",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"consult"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pontofrio",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"url\": \"https://www.pontofrio.com.br/refrigerador-electrolux-duplex-dc35a-260l-branco/p/1743666\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/consult",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"consult"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "# /consult route\n\nThis endpoint will start one scraper to collect data from the website specified in url and return data of site"
+		},
+		{
+			"name": "/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000",
+					"host": [
+						"localhost"
+					],
+					"port": "5000"
+				}
+			},
+			"response": []
+		}
+	]
+}

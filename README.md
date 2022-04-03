@@ -30,6 +30,9 @@
     2 - python scraping_the_world/app.py
     3 - make test
 
+### Api documentation
+Open with postman the file "scraping-the-world.postman_collection.json"
+
 ### Project structure
     - scraping-the-world
         - /scraping_the_world # Code source
