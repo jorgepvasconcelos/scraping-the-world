@@ -6,14 +6,14 @@ from parsel import Selector
 
 from scraping_the_world.models.querys import add_log, get_config
 from scraping_the_world.scrapers.webdriver_manager.webdriver_manager import WebdriverManager
-from scraping_the_world.exceptions.scrapers_exceptions import SiteWhithoutDataError
+from scraping_the_world.exceptions.scrapers_exceptions import SiteWhithoutDataError, PageNotFound404Error
 
 __site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None}
 
 
 def clean___site_data():
     global __site_data
-    __site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None}
+    __site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None, 'error': False}
 
 
 def scraping_submarino(url):
@@ -30,10 +30,17 @@ def scraping_submarino(url):
             return result
         elif scraping_type == 1:
             return scraping_requests(url=url)
-    except:
+    except PageNotFound404Error as error:
+        __site_data['error'] = error
+    except SiteWhithoutDataError as error:
+        __site_data['error'] = error
+    except Exception as error:
+        add_log(log_text=f'[scraping_submarino] Traceback: {error}', log_type='ERROR')
+        __site_data['error'] = error
+    finally:
         if webdriver_manager:
             webdriver_manager.driver_quit()
-        add_log(log_text=f'[scraping_submarino] Traceback: {traceback.format_exc()}', log_type='ERROR')
+
         return __site_data
 
 

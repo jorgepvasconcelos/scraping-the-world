@@ -3,6 +3,8 @@ from urllib.parse import urlparse
 from flask_restful import Resource, reqparse
 
 from scraping_the_world.models.utils import DataBase
+from scraping_the_world.exceptions.scrapers_exceptions import PageNotFound404Error
+
 from scraping_the_world.scrapers.americanas import scraping_americanas
 from scraping_the_world.scrapers.submarino import scraping_submarino
 from scraping_the_world.scrapers.pontofrio import scraping_pontofrio
@@ -25,9 +27,10 @@ def have_scraping_for_this_site(url: str) -> bool:
         return False
 
 
-def have_to_redo(data_dict: dict) -> bool:
-    for value in data_dict.values():
-        print(value)
+def have_to_redo(result_from_scraper) -> bool:
+    if isinstance(result_from_scraper['error'], PageNotFound404Error):
+        return False
+    for value in result_from_scraper.values():
         if value is None:
             break
         return False
@@ -48,15 +51,15 @@ def have_to_update_data(last_verify) -> bool:
 
 
 def get_data(url_site) -> dict:
-    data_from_site = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None}
+    result_from_scraper = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None}
 
     for _ in range(3):
-        data_from_site = get_data_from_site(url_site)
-        if have_to_redo(data_from_site):
+        result_from_scraper = get_data_from_site(url_site)
+        if have_to_redo(result_from_scraper):
             continue
         else:
             break
-    return data_from_site
+    return result_from_scraper
 
 
 def last_information_get(last_data: dict):

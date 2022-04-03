@@ -1,4 +1,3 @@
-import traceback
 
 from selenium.webdriver.common.by import By
 from requests_html import HTMLSession
@@ -6,14 +5,14 @@ from parsel import Selector
 
 from scraping_the_world.models.querys import add_log, get_config
 from scraping_the_world.scrapers.webdriver_manager.webdriver_manager import WebdriverManager
-from scraping_the_world.exceptions.scrapers_exceptions import SiteWhithoutDataError
+from scraping_the_world.exceptions.scrapers_exceptions import SiteWhithoutDataError, PageNotFound404Error
 
 __site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None}
 
 
 def clean___site_data():
     global __site_data
-    __site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None}
+    __site_data = {'titulo': None, 'imagem': None, 'preco': None, 'descricao': None, 'url': None, 'error': False}
 
 
 def scraping_saraiva(url):
@@ -30,10 +29,17 @@ def scraping_saraiva(url):
             return result
         elif scraping_type == 1:
             return scraping_requests(url=url)
-    except:
+    except PageNotFound404Error as error:
+        __site_data['error'] = error
+    except SiteWhithoutDataError as error:
+        __site_data['error'] = error
+    except Exception as error:
+        add_log(log_text=f'[scraping_saraiva] Traceback: {error}', log_type='ERROR')
+        __site_data['error'] = error
+    finally:
         if webdriver_manager:
             webdriver_manager.driver_quit()
-        add_log(log_text=f'[scraping_saraiva] Traceback: {traceback.format_exc()}', log_type='ERROR')
+
         return __site_data
 
 
@@ -67,7 +73,7 @@ def scraping_selenium(url):
 
     page_text = 'Pagina não encontrada'
     if wdtk.text_is_present(wait_time=2, locator=(By.TAG_NAME, 'html'), text=page_text):
-        return __site_data
+        raise PageNotFound404Error()
 
     selector = '[class="page-title-box"]>h1'
     if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, selector)):
