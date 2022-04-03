@@ -67,7 +67,7 @@ class ScrapingPontofrio:
         driver.get(self.__url)
 
         if 'O nosso pinguim não encontrou o que você procurou' in driver.page_source:
-            return self.__site_data
+            raise PageNotFound404Error()
 
         selector = '[class=" css-k7ata1 eym5xli0"]'
         if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, selector)):
