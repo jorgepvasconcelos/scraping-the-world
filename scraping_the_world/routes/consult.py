@@ -7,7 +7,7 @@ from scraping_the_world.exceptions.scrapers_exceptions import PageNotFound404Err
 
 from scraping_the_world.scrapers.americanas import ScrapingAmericanas
 from scraping_the_world.scrapers.submarino import scraping_submarino
-from scraping_the_world.scrapers.pontofrio import scraping_pontofrio
+from scraping_the_world.scrapers.pontofrio import ScrapingPontofrio
 from scraping_the_world.scrapers.saraiva import scraping_saraiva
 
 
@@ -89,8 +89,7 @@ def get_data_from_site(url):
         result = scraping_submarino(url)
         return result
     elif 'pontofrio' in hostname:
-        result = scraping_pontofrio(url)
-        return result
+        return ScrapingPontofrio(url).consult()
     elif 'saraiva' in hostname:
         result = scraping_saraiva(url)
         return result
