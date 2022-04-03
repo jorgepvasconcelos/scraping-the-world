@@ -5,7 +5,7 @@ from flask_restful import Resource, reqparse
 from scraping_the_world.models.utils import DataBase
 from scraping_the_world.exceptions.scrapers_exceptions import PageNotFound404Error
 
-from scraping_the_world.scrapers.americanas import scraping_americanas
+from scraping_the_world.scrapers.americanas import ScrapingAmericanas
 from scraping_the_world.scrapers.submarino import scraping_submarino
 from scraping_the_world.scrapers.pontofrio import scraping_pontofrio
 from scraping_the_world.scrapers.saraiva import scraping_saraiva
@@ -84,8 +84,7 @@ def get_data_from_site(url):
     hostname = parse.hostname
 
     if 'americanas' in hostname:
-        result = scraping_americanas(url)
-        return result
+        return ScrapingAmericanas(url).consult()
     elif 'submarino' in hostname:
         result = scraping_submarino(url)
         return result
