@@ -10,7 +10,10 @@ down: ## Remove the docker images and containers
 	docker-compose down
 
 run: ## Build and run the application
-	docker-compose up --build -d
+	docker-compose -f docker-compose.yml up --build -d
+
+run_dev: ## Build and run the application in dev mode
+	docker-compose -f docker-compose.dev.yml up --build -d
 
 restart: down run ## Rebuild all application
 
