@@ -2,4 +2,5 @@ QUERY_POPULATE = ["insert into configs (name, value) values ('scraping_americana
                   "insert into configs (name, value) values ('scraping_pontofrio', '0');",
                   "insert into configs (name, value) values ('scraping_submarino', '1');",
                   "insert into configs (name, value) values ('scraping_saraiva', '0');",
-                  "insert into configs (name, value) values ('scraping_magazineluiza', '1');",]
+                  "insert into configs (name, value) values ('scraping_magazineluiza', '1');",
+                  "insert into configs (name, value) values ('scraping_zattini', '1');"]

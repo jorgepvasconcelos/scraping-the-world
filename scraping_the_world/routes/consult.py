@@ -10,6 +10,7 @@ from scraping_the_world.scrapers.submarino import ScrapingSubmarino
 from scraping_the_world.scrapers.pontofrio import ScrapingPontofrio
 from scraping_the_world.scrapers.saraiva import ScrapingSaraiva
 from scraping_the_world.scrapers.magazineluiza import ScrapingMaganizeluiza
+from scraping_the_world.scrapers.zattini import ScrapingZattini
 
 
 def have_scraping_for_this_site(url: str) -> bool:
@@ -25,6 +26,8 @@ def have_scraping_for_this_site(url: str) -> bool:
     elif 'saraiva' in hostname:
         return True
     elif 'magazineluiza' in hostname:
+        return True
+    elif 'zattini' in hostname:
         return True
     else:
         return False
@@ -96,6 +99,8 @@ def get_data_from_site(url):
         return ScrapingSaraiva(url).consult()
     elif 'magazineluiza' in hostname:
         return ScrapingMaganizeluiza(url).consult()
+    elif 'zattini' in hostname:
+        return ScrapingZattini(url).consult()
 
 
 class Consult(Resource):
