@@ -2,6 +2,7 @@ import os
 import traceback
 
 from selenium import webdriver
+from selenium_stealth import stealth
 
 from scraping_the_world.scrapers.webdriver_manager.webdriver_toolkit import WebDriverToolKit
 from scraping_the_world.models.querys import add_log
@@ -54,6 +55,15 @@ class WebdriverManager(metaclass=SingletonMeta):
                 self.__driver = webdriver.Remote(command_executor='http://container_selenium:4444/wd/hub', options=options)
 
             self.__driver.maximize_window()
+
+            stealth(driver=self.__driver,
+                    languages=["en-US", "en"],
+                    vendor="Google Inc.",
+                    platform="Win32",
+                    webgl_vendor="Intel Inc.",
+                    renderer="Intel Iris OpenGL Engine",
+                    fix_hairline=True,
+                    )
             return self.__driver
         except:
             traceback.print_exc()
@@ -74,8 +84,8 @@ class WebdriverManager(metaclass=SingletonMeta):
         options.add_argument('--disable-gpu')
         options.add_experimental_option('useAutomationExtension', False)
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        options.add_argument(
-            '--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36')
+        # options.add_argument(
+        #     '--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36')
 
         # options.add_argument('--headless')
         return options
