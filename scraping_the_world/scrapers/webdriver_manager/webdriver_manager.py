@@ -2,6 +2,7 @@ import os
 import traceback
 
 from selenium import webdriver
+from selenium_stealth import stealth
 
 from scraping_the_world.scrapers.webdriver_manager.webdriver_toolkit import WebDriverToolKit
 from scraping_the_world.models.querys import add_log
@@ -50,6 +51,14 @@ class WebdriverManager(metaclass=SingletonMeta):
                 else:
                     webdriver_path = f'{WEBDRIVERS_PATH}\\chromedriver'
                     self.__driver = webdriver.Chrome(executable_path=webdriver_path, options=options)
+                    stealth(driver=self.__driver,
+                            languages=["en-US", "en"],
+                            vendor="Google Inc.",
+                            platform="Win32",
+                            webgl_vendor="Intel Inc.",
+                            renderer="Intel Iris OpenGL Engine",
+                            fix_hairline=True,
+                            )
             else:
                 self.__driver = webdriver.Remote(command_executor='http://container_selenium:4444/wd/hub', options=options)
 
