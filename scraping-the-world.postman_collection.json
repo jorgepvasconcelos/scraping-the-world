@@ -39,6 +39,66 @@
 					"response": []
 				},
 				{
+					"name": "zattini",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"url\": \"https://www.zattini.com.br/tenis-reserva-vela-masculino-preto+branco-B67-5119-026\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/consult",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"consult"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "magazineluiza",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"url\": \"https://www.magazineluiza.com.br/papel-fotografico-a4-180g-glossy-branco-brilhante-resistente-a-agua-100-folhas-premium/p/ke2bb2cj82/cf/ppft/\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/consult",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"consult"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "submarino",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
