@@ -19,7 +19,8 @@
 
 ### How to run dev
     1 - Change "ENV" param value to "DEV"  in .env file
-    2 - python scraping_the_world/app.py
+    2 - make run_dev
+    3 - python scraping_the_world/app.py
 
 ### How to run tests
     make run
@@ -27,8 +28,9 @@
 
 ### How to run dev tests
     1 - Change "ENV" param value to "DEV"  in .env file
-    2 - python scraping_the_world/app.py
-    3 - make test
+    2 - make run_dev
+    3 - python scraping_the_world/app.py
+    4 - make test
 
 ### Api documentation
 Open with postman the file "scraping-the-world.postman_collection.json"
