@@ -3,7 +3,7 @@ from urllib.parse import urlparse
 from flask_restful import Resource, reqparse
 
 from scraping_the_world.models.utils import DataBase
-from scraping_the_world.exceptions.scrapers_exceptions import PageNotFound404Error
+from scraping_the_world.exceptions.scrapers_exceptions import PageNotFound404Error, PageWithCaptchaError
 
 from scraping_the_world.scrapers.americanas import ScrapingAmericanas
 from scraping_the_world.scrapers.submarino import ScrapingSubmarino
@@ -35,6 +35,8 @@ def have_scraping_for_this_site(url: str) -> bool:
 
 def have_to_redo(result_from_scraper) -> bool:
     if isinstance(result_from_scraper['error'], PageNotFound404Error):
+        return False
+    if isinstance(result_from_scraper['error'], PageWithCaptchaError):
         return False
     for value in result_from_scraper.values():
         if value is None:

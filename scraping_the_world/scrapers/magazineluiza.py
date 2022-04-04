@@ -6,7 +6,7 @@ from parsel import Selector
 
 from scraping_the_world.models.querys import add_log, get_config
 from scraping_the_world.scrapers.webdriver_manager.webdriver_manager import WebdriverManager
-from scraping_the_world.exceptions.scrapers_exceptions import SiteWhithoutDataError, PageNotFound404Error
+from scraping_the_world.exceptions.scrapers_exceptions import SiteWhithoutDataError, PageNotFound404Error, PageWithCaptchaError
 
 
 class ScrapingMaganizeluiza:
@@ -30,6 +30,8 @@ class ScrapingMaganizeluiza:
             self.__site_data['error'] = error
         except SiteWhithoutDataError as error:
             self.__site_data['error'] = error
+        except PageWithCaptchaError as error:
+            self.__site_data['error'] = error
         except Exception as error:
             add_log(log_text=f'[scraping_magazineluiza] Traceback: {error}', log_type='ERROR')
             self.__site_data['error'] = error
@@ -45,6 +47,10 @@ class ScrapingMaganizeluiza:
         parsel_selector = Selector(text=response)
 
         page_text = 'Não encontramos essa página'
+        if page_text in response:
+            raise PageNotFound404Error()
+
+        page_text = 'Resolva este CAPTCHA para solicitar o desbloqueio do site'
         if page_text in response:
             raise PageNotFound404Error()
 
@@ -71,6 +77,10 @@ class ScrapingMaganizeluiza:
         page_text = 'Não encontramos essa página'
         if wdtk.text_is_present(wait_time=2, locator=(By.TAG_NAME, 'html'), text=page_text):
             raise PageNotFound404Error()
+
+        page_text = 'Resolva este CAPTCHA para solicitar o desbloqueio do site'
+        if wdtk.text_is_present(wait_time=2, locator=(By.TAG_NAME, 'html'), text=page_text):
+            raise PageWithCaptchaError()
 
         selector = '[class="header-product__title"]'
         if wdtk.element_is_present(wait_time=10, locator=(By.CSS_SELECTOR, selector)):
@@ -103,5 +113,5 @@ if __name__ == '__main__':
     url = 'https://www.magazineluiza.com.br/papel-fotografico-a4-180g-glossy-branco-brilhante-resistente-a-agua-100-folhas-premium/p/ke2bb2cj82/cf/ppft/'
     # 404Page
     # url = 'https://www.magazineluiza.com.br/tv-4dddddk-ulddtra-hd/tv-ddddde-vidsseo/ss/sset/tv4444k/'
-    scraping_result = ScrapingMaganizeluiza(url).consult() # with description
+    scraping_result = ScrapingMaganizeluiza(url).consult()  # with description
     print(scraping_result)
