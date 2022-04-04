@@ -113,15 +113,17 @@ class Consult(Resource):
         request_data = Consult.params.parse_args()
         url_received = request_data['url']
 
+        # Verify if have scraper for this url_received
         if not have_scraping_for_this_site(url=url_received):
             return {"Error": "We dont have scrapings for this site, please contact us to implement for this site"}, 404
 
+        # Verify if has passed one hour from the last scraping in this url_received
         query_result = DataBase.consult_one(query='select * from sites_data where url_recebida = %s', arguments=[url_received])
         if query_result and not have_to_update_data(last_verify=query_result['data_verificado']):
             return last_information_get(last_data=query_result)
 
+        # Get data from url_received
         data = get_data(url_received)
-
         titulo = data['titulo']
         imagem = data['imagem']
         preco = data['preco']
