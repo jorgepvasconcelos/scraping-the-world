@@ -2,7 +2,6 @@ import os
 import traceback
 
 from selenium import webdriver
-from selenium_stealth import stealth
 
 from scraping_the_world.scrapers.webdriver_manager.webdriver_toolkit import WebDriverToolKit
 from scraping_the_world.models.querys import add_log
@@ -56,14 +55,6 @@ class WebdriverManager(metaclass=SingletonMeta):
 
             self.__driver.maximize_window()
 
-            stealth(driver=self.__driver,
-                    languages=["en-US", "en"],
-                    vendor="Google Inc.",
-                    platform="Win32",
-                    webgl_vendor="Intel Inc.",
-                    renderer="Intel Iris OpenGL Engine",
-                    fix_hairline=True,
-                    )
             return self.__driver
         except:
             traceback.print_exc()
